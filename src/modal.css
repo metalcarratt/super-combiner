@@ -1,0 +1,25 @@
+.matte {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #0006;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+}
+
+.modal p {
+  padding: 20px;
+}
+
+.modal button {
+  width: calc(100% - 20px);
+  margin: 10px;
+}

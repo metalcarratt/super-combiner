@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/card.tsx","./src/cards.tsx","./src/goals.ts","./src/level-selector.tsx","./src/main.tsx","./src/map.tsx","./src/modal.tsx","./src/new-level-modal.tsx","./src/tile.tsx","./src/tiles.ts","./src/types.ts","./src/vite-env.d.ts"],"errors":true,"version":"5.6.3"}

@@ -1,0 +1,43 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+.levelSelector {
+  display: flex;
+  flex-direction: row;
+}
+
+.levelSelector .level {
+  font-size: 30px;
+  font-weight: 700;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.levelSelector .level:hover {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50px;
+}
