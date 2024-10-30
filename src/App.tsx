@@ -6,8 +6,8 @@ import { CardsType, Coords, GoalType, MapType, SelectedCardType, SpecialType } f
 import { calculateLevels } from './tiles';
 import { LevelSelector } from './level-selector';
 import { checkGoal, LevelFinished } from './goals';
-import { Modal } from './modal';
-import { NewLevelModal } from './new-level-modal';
+// import { Modal } from './modal';
+// import { NewLevelModal } from './new-level-modal';
 
 const t = () => ({ tile: 0, level: 0})
 
