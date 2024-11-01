@@ -5,8 +5,15 @@ export enum LevelFinished {
   Finished = "finished",
 }
 
-export const checkGoal = (goal: GoalType, score: number): LevelFinished => {
-  if (goal.score && score >= goal.score) {
+export const checkGoal = (
+  goal: GoalType,
+  score: number,
+  bloomScore: number
+): LevelFinished => {
+  if (
+    (goal.score && score >= goal.score) ||
+    (goal.bloomScore && bloomScore >= goal.bloomScore)
+  ) {
     return LevelFinished.Finished;
   }
 

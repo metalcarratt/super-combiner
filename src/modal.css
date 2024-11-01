@@ -4,7 +4,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background-color: #0006;
+  background-color: #0008;
 
   display: flex;
   justify-content: center;
@@ -13,13 +13,29 @@
 
 .modal {
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 
 .modal p {
   padding: 20px;
 }
 
+.modal h1 {
+  font-size: 30px;
+  padding: 0 40px 20px 40px;
+}
+
 .modal button {
-  width: calc(100% - 20px);
-  margin: 10px;
+  width: calc(100% - 4px);
+  margin: 2px;
+  border-radius: 0;
+  background-color: #e1e1fc;
+  border: 1px solid #8787d2;
+  margin-top: 5px;
+}
+
+.modal button:hover {
+  background-color: #9d9db0;
 }

@@ -1,5 +1,5 @@
 import { Card } from "./card";
-import { CardsType, SelectedCardType } from "./types";
+import { CardsType, SelectedCardType } from "../types";
 import './cards.css';
 
 type Props = {

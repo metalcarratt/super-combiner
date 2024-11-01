@@ -1,75 +1,51 @@
-import { useState } from 'react'
 import './App.css'
 import { Map } from './map';
-import { Cards } from './cards';
-import { CardsType, Coords, GoalType, MapType, SelectedCardType, SpecialType } from './types';
-import { calculateLevels } from './tiles';
+import { Cards } from './ui/cards';
 import { LevelSelector } from './level-selector';
-import { checkGoal, LevelFinished } from './goals';
-// import { Modal } from './modal';
-// import { NewLevelModal } from './new-level-modal';
-
-const t = () => ({ tile: 0, level: 0})
+import { Score } from './ui/score';
+import { Goal } from './ui/goal';
+import { LevelFinishedModal } from './ui/level-finished-modal';
+import { useApp } from './app';
+import { useLevel } from './use-level';
 
 function App() {
 
-  const [map, setMap] = useState<MapType>([[t(),t(),t()],[t(),t(),t()],[t(),t(),t()]]);
-  const [specials, setSpecials] = useState<SpecialType[]>([]);
+  const {
+    newLevel, 
+    goal, 
+    score, 
+    bloomScore, 
+    map, 
+    clickTile, 
+    hand, 
+    selectedCard, 
+    selectCard, 
+    levelFinished, 
+    showLevelFinishedModal,
+    setShowLevelFinishedModal
+  } = useApp();
 
-  const [cards, setCards] = useState<CardsType>([1,1,1]);
-
-  const [selectedCard, setSelectedCard] = useState<SelectedCardType>(1);
-
-  const [score, setScore] = useState<number>(0);
-
-  const [goal, setGoal] = useState<GoalType>({});
-
-  const [levelFinished, setLevelFinished] = useState<LevelFinished>(LevelFinished.Ongoing);
-
-  const selectCard = (index: number) => {
-    // console.log('select card', index);
-    setSelectedCard(index);
-  }
-
-  const newLevel = (newMap: MapType, cards: CardsType, specials: SpecialType[], goal: GoalType) => {
-    setMap(newMap);
-    setSpecials(specials);
-    setCards(cards);
-    setSelectedCard(1);
-    setScore(0);
-    setGoal(goal);
-    setLevelFinished(LevelFinished.Ongoing);
-  }
-
-  const clickTile = (coords: Coords) => {
-    const mapCopy = [...map];
-    const applyCard = cards[selectedCard];
-    console.log('click tile', applyCard);
-    if (applyCard && applyCard !== 0 && mapCopy[coords.y][coords.x].tile === 0) {
-      
-      mapCopy[coords.y][coords.x] = {tile: applyCard, level: 1};
-      const {updatedMap, score} = calculateLevels(mapCopy);
-      setMap(updatedMap);
-      setScore(score);
-      setLevelFinished(checkGoal(goal, score));
-    }
-  }
+  const {levels, level, clickLevel, nextLevel} = useLevel(newLevel);
 
   return (
     <div className="container" >
       <div className="column">
-        <LevelSelector newLevel={newLevel} />
+        <LevelSelector levels={levels} level={level} clickLevel={clickLevel} />
+        <Score goal={goal} score={score} bloomScore={bloomScore} />
+        <Map map={map} clickTile={clickTile} />
 
-        <p>Score: {score}</p>
-        <Map map={map} clickTile={clickTile} specials={specials} />
-
-        <Cards cards={cards} selectedCard={selectedCard} selectCard={selectCard} />
+        <Cards cards={hand} selectedCard={selectedCard} selectCard={selectCard} />
       </div>
       <div className="column">
-        Goal: Get {goal.score} score {levelFinished === LevelFinished.Finished && <span>Level FInished</span>}
+        <Goal goal={goal} levelFinished={levelFinished} />
       </div>
 
       {/* <NewLevelModal goal={goal} /> */}
+      {showLevelFinishedModal &&
+        <LevelFinishedModal 
+          nextLevelFn={() => {setShowLevelFinishedModal(false); nextLevel();}} 
+          keepPlayingFn={() => setShowLevelFinishedModal(false)}
+        />}
     </div>
   )
 }

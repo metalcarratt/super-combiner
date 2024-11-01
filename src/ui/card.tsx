@@ -1,5 +1,5 @@
-import { classForTile } from "./tiles";
-import { TileType } from "./types";
+import { classForTile } from "../tiles";
+import { TileType } from "../types";
 
 type Props = {
     tile: TileType;
@@ -14,7 +14,7 @@ export const Card = ({tile, index, selected, selectCard}: Props) => {
 
     return (
         <div className={className} onClick={() => selectCard(index)}>
-            1
+            
         </div>
     );
 }

@@ -1,4 +1,11 @@
-export type TileType = number;
+export enum TileType {
+  Dead = -1,
+  Earth = 0,
+  Grass = 1,
+  Lightning = 2,
+  Fire = 3,
+  Bloom = 9,
+}
 
 export type MapTileType = {
   tile: TileType;
@@ -13,11 +20,7 @@ export type SelectedCardType = TileType;
 
 export type Coords = { x: number; y: number };
 
-export type SpecialType = {
-  coord: Coords;
-  type: "man" | "woman";
-};
-
 export type GoalType = {
   score?: number;
+  bloomScore?: number;
 };

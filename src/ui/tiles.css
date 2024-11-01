@@ -1,0 +1,71 @@
+.tile {
+  width: 75px;
+  height: 75px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: relative;
+  font-size: 20px;
+  text-shadow: 2px 2px black;
+}
+
+.tile:hover {
+  cursor: pointer;
+  border: 1px solid white;
+}
+
+.tile.dead {
+  background-color: #2a2a2a;
+  background-image: url("/void2.png");
+  background-size: cover;
+}
+
+.tile.dead:hover {
+  cursor: auto;
+  border: 1px solid black;
+}
+
+.tile.bloom {
+  background-color: #ffff29;
+  /* color: #7b744f; */
+  background-image: url("/bloom.png");
+  background-size: cover;
+  text-shadow: 2px 2px black;
+}
+
+.tile.bloom:hover {
+  cursor: auto;
+  border: 1px solid black;
+}
+
+.special {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.earth {
+  background-color: brown;
+  background-image: url("/earth3.png");
+  background-size: cover;
+}
+
+.grass {
+  background-color: green;
+  background-image: url("/grass3.png");
+  background-size: cover;
+}
+
+.lightning {
+  background-color: purple;
+  background-image: url("/lightning3.png");
+  background-size: cover;
+}
+
+.fire {
+  background-color: red;
+  background-image: url("/fire2.png");
+  background-size: cover;
+}
