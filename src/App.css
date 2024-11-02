@@ -22,10 +22,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
   background-color: #fff4;
   padding: 10px 10px 20px 10px;
   border-radius: 10px;
+}
+
+h1#top {
+  text-shadow: 0px 0px 40px #fc70d5;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .column {
@@ -33,7 +43,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 20px;
+  margin: 0 60px;
 }
 
 .levelSelector {
@@ -42,6 +52,7 @@ body {
   padding: 10px;
   border-radius: 5px;
   background-color: #fff4;
+  margin-bottom: 40px;
 }
 
 .levelSelector .level {
@@ -70,4 +81,15 @@ body {
   font-weight: 700;
   font-size: 18px;
   color: purple;
+}
+
+a.help {
+  margin-top: 20px;
+  color: #5b38be;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+a.help:hover {
+  color: #3a2475;
 }

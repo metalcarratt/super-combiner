@@ -19,12 +19,18 @@
 }
 
 .modal p {
-  padding: 20px;
+  padding: 0px 20px;
+  margin: 5px 0px;
 }
 
 .modal h1 {
   font-size: 30px;
   padding: 0 40px 20px 40px;
+}
+
+.modal h2 {
+  padding: 0px 20px;
+  margin: 5px 0px;
 }
 
 .modal button {
@@ -38,4 +44,25 @@
 
 .modal button:hover {
   background-color: #9d9db0;
+}
+
+.modal p.details {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.modal .desc {
+  margin-left: 20px;
+  margin-top: -5px;
+}
+
+.modal .desc h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.modal .desc ul {
+  margin: 0;
+  padding-left: 20px;
 }

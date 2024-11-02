@@ -1,0 +1,50 @@
+.audioPanel {
+  background-color: #626296;
+  border: 1px solid #2c2c4a;
+  padding: 4px 8px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.audioPanel .icon {
+  color: #d7d8e5;
+  font-size: 20px;
+  margin: 0px 8px;
+}
+
+.audioPanel .hud {
+  display: inline-block;
+  background-color: black;
+  border-top: 1px solid #817070;
+  border-left: 1px solid #817070;
+  border-bottom: 1px solid #cdc4c4;
+  border-right: 1px solid #cdc4c4;
+  padding: 4px 16px;
+  margin: 4px;
+  color: #09c809;
+  width: 250px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.audioPanel .playbackState {
+  margin-left: 8px;
+  color: #4c4cff;
+}
+
+.audioPanel a {
+  color: white;
+  margin: 0px 8px;
+}
+
+.audioPanel a:hover {
+  color: rgb(138, 139, 217);
+}
+
+.audioPanel a.next {
+  margin-top: -2px;
+}

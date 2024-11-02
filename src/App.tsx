@@ -7,6 +7,8 @@ import { Goal } from './ui/goal';
 import { LevelFinishedModal } from './ui/level-finished-modal';
 import { useApp } from './app';
 import { useLevel } from './use-level';
+import { HowToPlayModal } from './ui/howto-modal';
+import { AudioPanel } from './ui/audio';
 
 function App() {
 
@@ -22,30 +24,40 @@ function App() {
     selectCard, 
     levelFinished, 
     showLevelFinishedModal,
-    setShowLevelFinishedModal
+    setShowLevelFinishedModal,
+    howtoModal,
+    setHowtoModal
   } = useApp();
 
   const {levels, level, clickLevel, nextLevel} = useLevel(newLevel);
 
   return (
     <div className="container" >
-      <div className="column">
-        <LevelSelector levels={levels} level={level} clickLevel={clickLevel} />
-        <Score goal={goal} score={score} bloomScore={bloomScore} />
-        <Map map={map} clickTile={clickTile} />
+      <h1 id="top">Super Combiner</h1>
+      <AudioPanel />
+      <LevelSelector levels={levels} level={level} clickLevel={clickLevel} />
+      <div className="columns">
+        <div className="column">
+          <Score goal={goal} score={score} bloomScore={bloomScore} />
+          <Map map={map} clickTile={clickTile} />
 
-        <Cards cards={hand} selectedCard={selectedCard} selectCard={selectCard} />
-      </div>
-      <div className="column">
-        <Goal goal={goal} levelFinished={levelFinished} />
+          <Cards cards={hand} selectedCard={selectedCard} selectCard={selectCard} />
+        </div>
+        <div className="column">
+          <Goal goal={goal} levelFinished={levelFinished} />
+          <a className="help" href="#" onClick={(e) => {setHowtoModal(true); e.preventDefault()}}>How to play?</a>
+        </div>
       </div>
 
-      {/* <NewLevelModal goal={goal} /> */}
       {showLevelFinishedModal &&
         <LevelFinishedModal 
           nextLevelFn={() => {setShowLevelFinishedModal(false); nextLevel();}} 
           keepPlayingFn={() => setShowLevelFinishedModal(false)}
         />}
+
+      {howtoModal &&
+        <HowToPlayModal close={() => setHowtoModal(false)}/>
+      }
     </div>
   )
 }

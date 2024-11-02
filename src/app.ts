@@ -36,6 +36,7 @@ export const useApp = () => {
 
   const [showLevelFinishedModal, setShowLevelFinishedModal] =
     useState<boolean>(false);
+  const [howtoModal, setHowtoModal] = useState<boolean>(false);
 
   const selectCard = (index: number) => {
     // console.log('select card', index);
@@ -95,6 +96,11 @@ export const useApp = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const audio = new Audio("/super-combiner/song1.mp3");
+  //   audio.play();
+  // }, []);
+
   return {
     newLevel,
     goal,
@@ -108,5 +114,7 @@ export const useApp = () => {
     levelFinished,
     showLevelFinishedModal,
     setShowLevelFinishedModal,
+    howtoModal,
+    setHowtoModal,
   };
 };
