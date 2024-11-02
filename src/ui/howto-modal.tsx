@@ -43,7 +43,7 @@ export const HowToPlayModal = ({close}: Props) => {
                 <ul>
                     <li>One point for self</li>
                     <li>Plus one point for each diagonally adjacent lightning</li>
-                    <li>Minus one point for each horizontally or vertically adjacent grass</li>
+                    <li>Minus one point for each horizontally or vertically adjacent lightning</li>
                 </ul>
             </Detail>
             <Detail tile="fire">
