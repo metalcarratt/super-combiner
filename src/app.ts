@@ -9,7 +9,7 @@ import {
 } from "./types";
 import { checkGoal, LevelFinished } from "./goals";
 import { calculateLevels } from "./tiles";
-import { LevelType } from "./use-level";
+import { LevelType, useLevel } from "./use-level";
 
 const t = () => ({ tile: 0, level: 0 });
 
@@ -37,6 +37,9 @@ export const useApp = () => {
   const [showLevelFinishedModal, setShowLevelFinishedModal] =
     useState<boolean>(false);
   const [howtoModal, setHowtoModal] = useState<boolean>(false);
+
+  const [showLevelFailedModal, setShowLevelFailedModal] =
+    useState<Boolean>(false);
 
   const selectCard = (index: number) => {
     // console.log('select card', index);
@@ -92,17 +95,27 @@ export const useApp = () => {
         isFinished !== levelFinished
       ) {
         setShowLevelFinishedModal(true);
+      } else {
+        if (!map.flat().find((tile) => tile.tile === TileType.Earth)) {
+          setShowLevelFailedModal(true);
+        }
       }
     }
   };
 
-  // useEffect(() => {
-  //   const audio = new Audio("/super-combiner/song1.mp3");
-  //   audio.play();
-  // }, []);
+  const {
+    levels,
+    level: currentLevel,
+    clickLevel,
+    nextLevel,
+  } = useLevel(newLevel);
+
+  const tryAgain = () => {
+    setShowLevelFailedModal(false);
+    clickLevel(levels[currentLevel - 1]);
+  };
 
   return {
-    newLevel,
     goal,
     score,
     bloomScore,
@@ -116,5 +129,12 @@ export const useApp = () => {
     setShowLevelFinishedModal,
     howtoModal,
     setHowtoModal,
+    availableCards: level?.cards,
+    showLevelFailedModal,
+    tryAgain,
+    levels,
+    currentLevel,
+    clickLevel,
+    nextLevel,
   };
 };

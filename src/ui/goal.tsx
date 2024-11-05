@@ -9,7 +9,7 @@ type Props = {
 export const Goal = ({goal, levelFinished}: Props) => {
     return (
         <>
-            Goal:
+            <h2>Goal:</h2>
             {goal.score && <span>Get {goal.score} score</span>}
             {goal.bloomScore && <span>Get {goal.bloomScore} on blooms</span>}
             {levelFinished === LevelFinished.Finished && <span className="finished">Level Finished</span>}

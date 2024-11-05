@@ -6,14 +6,14 @@ import { Score } from './ui/score';
 import { Goal } from './ui/goal';
 import { LevelFinishedModal } from './ui/level-finished-modal';
 import { useApp } from './app';
-import { useLevel } from './use-level';
 import { HowToPlayModal } from './ui/howto-modal';
 import { AudioPanel } from './ui/audio';
+import { classForTile } from './tiles';
+import { LevelFailedModal } from './ui/level-failed-modal';
 
 function App() {
 
   const {
-    newLevel, 
     goal, 
     score, 
     bloomScore, 
@@ -26,16 +26,18 @@ function App() {
     showLevelFinishedModal,
     setShowLevelFinishedModal,
     howtoModal,
-    setHowtoModal
+    setHowtoModal,
+    availableCards,
+    showLevelFailedModal,
+    tryAgain,
+    levels, currentLevel, clickLevel, nextLevel
   } = useApp();
-
-  const {levels, level, clickLevel, nextLevel} = useLevel(newLevel);
 
   return (
     <div className="container" >
       <h1 id="top">Super Combiner</h1>
       <AudioPanel />
-      <LevelSelector levels={levels} level={level} clickLevel={clickLevel} />
+      <LevelSelector levels={levels} level={currentLevel} clickLevel={clickLevel} />
       <div className="columns">
         <div className="column">
           <Score goal={goal} score={score} bloomScore={bloomScore} />
@@ -45,6 +47,12 @@ function App() {
         </div>
         <div className="column">
           <Goal goal={goal} levelFinished={levelFinished} />
+
+          <h2>Available tiles:</h2>
+          <div className="availableCards">
+            {availableCards?.map(card => <span className={classForTile(card)} />)}
+          </div>
+
           <a className="help" href="#" onClick={(e) => {setHowtoModal(true); e.preventDefault()}}>How to play?</a>
         </div>
       </div>
@@ -58,6 +66,8 @@ function App() {
       {howtoModal &&
         <HowToPlayModal close={() => setHowtoModal(false)}/>
       }
+
+      {showLevelFailedModal && <LevelFailedModal tryAgainFn={tryAgain} />}
     </div>
   )
 }
