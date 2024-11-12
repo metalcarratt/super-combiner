@@ -69,3 +69,25 @@
   background-image: url("/fire2.png");
   background-size: cover;
 }
+
+.tile .river {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.river.right {
+  transform: rotate(-90deg);
+}
+
+.river.left {
+  transform: rotate(90deg);
+}
+
+.river.up {
+  transform: rotate(180deg);
+}
+
+.tile .tileLevel {
+  z-index: 10;
+}

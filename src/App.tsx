@@ -1,19 +1,19 @@
 import './App.css'
-import { Map } from './map';
+import { Map } from './ui/map';
 import { Cards } from './ui/cards';
-import { LevelSelector } from './level-selector';
-import { Score } from './ui/score';
+import { LevelSelector } from './ui/level-selector';
 import { Goal } from './ui/goal';
 import { LevelFinishedModal } from './ui/level-finished-modal';
-import { useApp } from './app';
+import { useApp } from './logic/use-app';
 import { HowToPlayModal } from './ui/howto-modal';
 import { AudioPanel } from './ui/audio';
-import { classForTile } from './tiles';
+import { classForTile } from './logic/calculate-levels';
 import { LevelFailedModal } from './ui/level-failed-modal';
 
 function App() {
 
   const {
+    levelSelector,
     goal, 
     score, 
     bloomScore, 
@@ -30,23 +30,31 @@ function App() {
     availableCards,
     showLevelFailedModal,
     tryAgain,
-    levels, currentLevel, clickLevel, nextLevel
+    nextLevel,
+    riverOverlays,
+    closeLevelFailedModal,
+    level,
+    bg
   } = useApp();
 
   return (
+    <div className={`background ${bg}`}>
     <div className="container" >
       <h1 id="top">Super Combiner</h1>
       <AudioPanel />
-      <LevelSelector levels={levels} level={currentLevel} clickLevel={clickLevel} />
+      <LevelSelector model={levelSelector} />
+      <div className="title">
+        <h2>{level?.humanName}</h2>
+        <p>{level?.hint}</p>
+      </div>
       <div className="columns">
         <div className="column">
-          <Score goal={goal} score={score} bloomScore={bloomScore} />
-          <Map map={map} clickTile={clickTile} />
+          <Map map={map} clickTile={clickTile} riverOverlays={riverOverlays}/>
 
           <Cards cards={hand} selectedCard={selectedCard} selectCard={selectCard} />
         </div>
         <div className="column">
-          <Goal goal={goal} levelFinished={levelFinished} />
+          <Goal goal={goal} score={score} bloomScore={bloomScore} levelFinished={levelFinished} />
 
           <h2>Available tiles:</h2>
           <div className="availableCards">
@@ -67,7 +75,8 @@ function App() {
         <HowToPlayModal close={() => setHowtoModal(false)}/>
       }
 
-      {showLevelFailedModal && <LevelFailedModal tryAgainFn={tryAgain} />}
+      {showLevelFailedModal && <LevelFailedModal tryAgainFn={tryAgain} closeFn={closeLevelFailedModal}/>}
+    </div>
     </div>
   )
 }

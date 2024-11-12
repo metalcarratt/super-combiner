@@ -1,24 +1,13 @@
 import { useState } from "react";
-import {
-  CardsType,
-  Coords,
-  GoalType,
-  MapType,
-  SelectedCardType,
-  TileType,
-} from "./types";
+import { CardsType, Coords, GoalType, SelectedCardType } from "../types";
 import { checkGoal, LevelFinished } from "./goals";
-import { calculateLevels } from "./tiles";
-import { LevelType, useLevel } from "./use-level";
-
-const t = () => ({ tile: 0, level: 0 });
+import { calculateLevels } from "./calculate-levels";
+import { useLevel } from "./use-level";
+import { GameMap, TileType } from "./map";
+import { LevelType } from "./level-types";
 
 export const useApp = () => {
-  const [map, setMap] = useState<MapType>([
-    [t(), t(), t()],
-    [t(), t(), t()],
-    [t(), t(), t()],
-  ]);
+  const [map, setMap] = useState<GameMap>(new GameMap());
 
   const [level, setLevel] = useState<LevelType | undefined>();
   const [hand, setHand] = useState<CardsType>([]);
@@ -66,7 +55,8 @@ export const useApp = () => {
     setHand(handCopy);
   };
 
-  const newLevel = (newMap: MapType, level: LevelType) => {
+  const newLevel = (newMap: GameMap, level: LevelType) => {
+    console.log("new level", newMap);
     setMap(newMap);
     setLevel(level);
     newHand(level);
@@ -77,12 +67,12 @@ export const useApp = () => {
   };
 
   const clickTile = (coords: Coords) => {
-    const mapCopy = [...map];
+    const mapCopy = map.clone();
     const applyCard = hand[selectedCard];
     // console.log('click tile', applyCard);
-    if (mapCopy[coords.y][coords.x].tile === TileType.Earth) {
-      mapCopy[coords.y][coords.x] = { tile: applyCard, level: 1 };
-      const { updatedMap, score, bloomScore } = calculateLevels(mapCopy);
+    if (mapCopy.getTile(coords).tile === TileType.Earth && level) {
+      mapCopy.setTile(coords, { tile: applyCard, level: 1 });
+      const { updatedMap, score, bloomScore } = calculateLevels(mapCopy, level);
       newCardInHand();
       setMap(updatedMap);
       setScore(score);
@@ -96,7 +86,7 @@ export const useApp = () => {
       ) {
         setShowLevelFinishedModal(true);
       } else {
-        if (!map.flat().find((tile) => tile.tile === TileType.Earth)) {
+        if (!map.findTile((tile) => tile.tile === TileType.Earth)) {
           setShowLevelFailedModal(true);
         }
       }
@@ -104,7 +94,8 @@ export const useApp = () => {
   };
 
   const {
-    levels,
+    chapters,
+    chapter,
     level: currentLevel,
     clickLevel,
     nextLevel,
@@ -112,10 +103,20 @@ export const useApp = () => {
 
   const tryAgain = () => {
     setShowLevelFailedModal(false);
-    clickLevel(levels[currentLevel - 1]);
+    clickLevel(chapter, currentLevel);
+  };
+
+  const closeLevelFailedModal = () => {
+    setShowLevelFailedModal(false);
   };
 
   return {
+    levelSelector: {
+      chapters,
+      chapter,
+      level: currentLevel,
+      clickLevel,
+    },
     goal,
     score,
     bloomScore,
@@ -132,9 +133,14 @@ export const useApp = () => {
     availableCards: level?.cards,
     showLevelFailedModal,
     tryAgain,
-    levels,
     currentLevel,
     clickLevel,
     nextLevel,
+    riverOverlays: level?.riverOverlays,
+    closeLevelFailedModal,
+    level,
+    chapters,
+    chapter,
+    bg: chapters[chapter].background,
   };
 };

@@ -1,5 +1,5 @@
-import { classForTile } from "../tiles";
-import { TileType } from "../types";
+import { classForTile } from "../logic/calculate-levels";
+import { TileType } from "../logic/map";
 
 type Props = {
     tile: TileType;

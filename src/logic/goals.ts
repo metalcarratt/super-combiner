@@ -1,4 +1,4 @@
-import { GoalType } from "./types";
+import { GoalType } from "../types";
 
 export enum LevelFinished {
   Ongoing = "ongoing",

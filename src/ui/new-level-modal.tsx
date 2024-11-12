@@ -1,5 +1,5 @@
+import { GoalType } from "../types";
 import { Modal } from "./modal";
-import { GoalType } from "./types";
 
 type Props = {
     goal: GoalType
