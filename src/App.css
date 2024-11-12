@@ -62,22 +62,42 @@ h1#top {
   border-radius: 5px;
   background-color: #fff4;
   margin-bottom: 20px;
+  width: calc(100% - 20px);
 }
 
 .levelSelector .chapter {
   display: flex;
   flex-direction: row;
   margin-top: 20px;
+  position: relative;
 }
 
 .chapter label {
   position: absolute;
-  margin-top: -16px;
+  margin-top: -34px;
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 700;
   margin-left: 6px;
   color: #c76ab8;
+  display: flex;
+  align-items: center;
+}
+
+.chapter label .name {
+  margin-right: 10px;
+}
+
+.chapter label .arrow {
+  font-size: 28px;
+  color: #7b7bd8;
+  user-select: none;
+  margin-top: -6px;
+}
+
+.chapter label .arrow:hover {
+  cursor: pointer;
+  color: white;
 }
 
 .levelSelector .level {
