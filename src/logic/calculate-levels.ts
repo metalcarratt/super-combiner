@@ -2,7 +2,7 @@ import { Coords } from "../types";
 import { LevelType, RiverOverlay } from "./level-types";
 import { GameMap, MapTileType, RiverEssenceType, TileType } from "./map";
 
-export const classForTile = (tile: TileType) => {
+export const classForTile = (tile: TileType, essence?: RiverEssenceType) => {
   switch (tile) {
     case TileType.Earth:
       return "earth";
@@ -13,6 +13,9 @@ export const classForTile = (tile: TileType) => {
     case TileType.Fire:
       return "fire";
     case TileType.Dead:
+      if (essence) {
+        return `dead ${essence}`;
+      }
       return "dead";
     case TileType.Bloom:
       return "bloom";
@@ -77,28 +80,55 @@ const scoreForBloom = (map: GameMap, coords: Coords) => {
   return level;
 };
 
+const essenceScore = (essence?: RiverEssenceType) => {
+  if (
+    essence === RiverEssenceType.Electric ||
+    essence === RiverEssenceType.Fire ||
+    essence === RiverEssenceType.Water
+  ) {
+    return 1.5;
+  }
+
+  if (
+    essence === RiverEssenceType.ElectricFire ||
+    essence === RiverEssenceType.FireWater ||
+    essence === RiverEssenceType.WaterElectric
+  ) {
+    return 2;
+  }
+
+  if (essence === RiverEssenceType.Golden) {
+    return 3;
+  }
+
+  return 1;
+};
+
 const scoreForRiver = (cell: MapTileType, level: number) => {
-  if (
-    cell.riverType === RiverEssenceType.Electric ||
-    cell.riverType === RiverEssenceType.Fire ||
-    cell.riverType === RiverEssenceType.Water
-  ) {
-    return Math.floor(level * 1.5);
-  }
+  return Math.floor(level * essenceScore(cell.riverType));
+};
 
-  if (
-    cell.riverType === RiverEssenceType.ElectricFire ||
-    cell.riverType === RiverEssenceType.FireWater ||
-    cell.riverType === RiverEssenceType.WaterElectric
-  ) {
-    return level * 2;
-  }
-
-  if (cell.riverType === RiverEssenceType.Golden) {
-    return level * 3;
-  }
-
-  return level;
+const scoreForLake = (map: GameMap, coords: Coords, level: number) => {
+  console.log("SCORE FOR LAKE");
+  let newLevel = level;
+  const lakes = map
+    .surroundingCoords(coords)
+    .filter((coord) => {
+      const tile = coord && map.getTile(coord);
+      return tile?.tile === TileType.Dead && tile?.riverType;
+    })
+    .map((coord) => (coord ? map.getTile(coord) : undefined));
+  console.log("lakes", lakes);
+  lakes.forEach((lake) => {
+    if (lake) {
+      console.log("level", newLevel);
+      const escore = essenceScore(lake.riverType);
+      console.log("escore", escore);
+      newLevel = Math.floor(newLevel * escore);
+      console.log("level2", newLevel);
+    }
+  });
+  return newLevel;
 };
 
 const essenceForTileType = (tileType: TileType) => {
@@ -116,35 +146,31 @@ const essenceForTileType = (tileType: TileType) => {
   return RiverEssenceType.Mud;
 };
 
-const traverseRiver = (
-  map: GameMap,
-  overlay: RiverOverlay,
-  level: LevelType,
+const getEssence = (
+  thisTileEssence: RiverEssenceType,
   currentEssence?: RiverEssenceType
 ) => {
-  let essence;
-  const thisTileEssence = essenceForTileType(map.getTile(overlay.coords).tile);
   if (
     (currentEssence === RiverEssenceType.Electric &&
       thisTileEssence === RiverEssenceType.Fire) ||
     (currentEssence === RiverEssenceType.Fire &&
       thisTileEssence === RiverEssenceType.Electric)
   ) {
-    essence = RiverEssenceType.ElectricFire;
+    return RiverEssenceType.ElectricFire;
   } else if (
     (currentEssence === RiverEssenceType.Electric &&
       thisTileEssence === RiverEssenceType.Water) ||
     (currentEssence === RiverEssenceType.Water &&
       thisTileEssence === RiverEssenceType.Electric)
   ) {
-    essence = RiverEssenceType.WaterElectric;
+    return RiverEssenceType.WaterElectric;
   } else if (
     (currentEssence === RiverEssenceType.Fire &&
       thisTileEssence === RiverEssenceType.Water) ||
     (currentEssence === RiverEssenceType.Water &&
       thisTileEssence === RiverEssenceType.Fire)
   ) {
-    essence = RiverEssenceType.FireWater;
+    return RiverEssenceType.FireWater;
   } else if (
     (currentEssence === RiverEssenceType.ElectricFire &&
       thisTileEssence === RiverEssenceType.Water) ||
@@ -153,14 +179,24 @@ const traverseRiver = (
     (currentEssence === RiverEssenceType.WaterElectric &&
       thisTileEssence === RiverEssenceType.Fire)
   ) {
-    essence = RiverEssenceType.Golden;
+    return RiverEssenceType.Golden;
   } else if (currentEssence && currentEssence !== RiverEssenceType.Mud) {
-    essence = currentEssence;
+    return currentEssence;
   } else if (thisTileEssence) {
-    essence = thisTileEssence;
+    return thisTileEssence;
   } else {
-    essence = RiverEssenceType.Mud;
+    return RiverEssenceType.Mud;
   }
+};
+
+const traverseRiver = (
+  map: GameMap,
+  overlay: RiverOverlay,
+  level: LevelType,
+  currentEssence?: RiverEssenceType
+) => {
+  const thisTileEssence = essenceForTileType(map.getTile(overlay.coords).tile);
+  let essence = getEssence(thisTileEssence, currentEssence);
 
   map.getTile(overlay.coords).riverType = essence;
   const nextCoord = map.go(overlay.direction, overlay.coords);
@@ -172,6 +208,12 @@ const traverseRiver = (
     );
   if (nextOverlay) {
     traverseRiver(map, nextOverlay, level, essence);
+  } else if (
+    nextCoord &&
+    map.getTile(nextCoord).tile === TileType.Dead &&
+    essence !== RiverEssenceType.Mud
+  ) {
+    map.getTile(nextCoord).riverType = essence;
   }
 };
 
@@ -200,6 +242,7 @@ export const calculateLevels = (map: GameMap, level: LevelType) => {
         blooms.push({ x, y });
       }
       level = scoreForRiver(cell, level);
+      level = scoreForLake(map, { x, y }, level);
       score += level;
       return { ...cell, level };
     })

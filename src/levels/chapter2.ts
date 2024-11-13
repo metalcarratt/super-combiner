@@ -46,7 +46,7 @@ export const chapter2: Chapter = {
     {
       id: 1,
       humanName: "Flow of gold",
-      hint: "Try and create a golden river",
+      hint: "The more elements you mix, the bigger the point boost",
       size: 4,
       handSize: 1,
       cards: [1, 2, 3],
@@ -111,6 +111,92 @@ export const chapter2: Chapter = {
       ],
       goal: {
         score: 80,
+      },
+    },
+    {
+      id: 2,
+      humanName: "Golden Lake",
+      hint: "Lakes bless all surrounding tiles with point boosts",
+      size: 4,
+      handSize: 1,
+      cards: [1, 2, 3],
+      deadZones: [{ x: 2, y: 1 }],
+      blooms: [{ x: 2, y: 3 }],
+      riverOverlays: [
+        {
+          type: RiverType.AntiClockwiseBend,
+          direction: Direction.Right,
+          coords: { x: 0, y: 0 },
+          source: true,
+        },
+        {
+          type: RiverType.Straight,
+          direction: Direction.Right,
+          coords: { x: 1, y: 0 },
+        },
+        {
+          type: RiverType.ClockwiseBend,
+          direction: Direction.Down,
+          coords: { x: 2, y: 0 },
+        },
+      ],
+      goal: {
+        score: 120,
+      },
+    },
+    {
+      id: 3,
+      humanName: "Blooming Lakes",
+      hint: "",
+      size: 5,
+      handSize: 1,
+      cards: [1, 2, 3],
+      deadZones: [
+        { x: 1, y: 2 },
+        { x: 3, y: 2 },
+        { x: 0, y: 3 },
+        { x: 4, y: 1 },
+      ],
+      blooms: [
+        { x: 2, y: 1 },
+        { x: 2, y: 3 },
+      ],
+      riverOverlays: [
+        {
+          type: RiverType.ClockwiseBend,
+          direction: Direction.Left,
+          coords: { x: 2, y: 0 },
+          source: true,
+        },
+        {
+          type: RiverType.AntiClockwiseBend,
+          direction: Direction.Down,
+          coords: { x: 1, y: 0 },
+        },
+        {
+          type: RiverType.Straight,
+          direction: Direction.Down,
+          coords: { x: 1, y: 1 },
+        },
+        {
+          type: RiverType.ClockwiseBend,
+          direction: Direction.Right,
+          coords: { x: 2, y: 4 },
+          source: true,
+        },
+        {
+          type: RiverType.AntiClockwiseBend,
+          direction: Direction.Up,
+          coords: { x: 3, y: 4 },
+        },
+        {
+          type: RiverType.Straight,
+          direction: Direction.Up,
+          coords: { x: 3, y: 3 },
+        },
+      ],
+      goal: {
+        bloomScore: 150,
       },
     },
   ],

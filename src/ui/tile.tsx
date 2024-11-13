@@ -41,7 +41,7 @@ const getRiverImage = (riverOverlay: RiverOverlay, riverEssence: RiverEssenceTyp
 }
 
 export const Tile = ({tile, coords, clickTile, riverOverlay}: Props) => {
-  const className =`tile ${classForTile(tile.tile)} ${riverOverlay?.type}`;
+  const className =`tile ${classForTile(tile.tile, tile.riverType)} ${riverOverlay?.type}`;
   console.log('draw tile', tile.riverType);
   return <div className={className} onClick={() => clickTile(coords)}>
     { riverOverlay && tile.riverType && 

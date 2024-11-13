@@ -22,6 +22,34 @@
   background-size: cover;
 }
 
+.tile.dead.electric {
+  background-image: url("/void2-lightning.png");
+}
+
+.tile.dead.water {
+  background-image: url("/void2-water.png");
+}
+
+.tile.dead.fire {
+  background-image: url("/void2-fire.png");
+}
+
+.tile.dead.golden {
+  background-image: url("/void2-gold.png");
+}
+
+.tile.dead.waterElectric {
+  background-image: url("/void2-lightning-water.png");
+}
+
+.tile.dead.electricFire {
+  background-image: url("/void2-fire-lightning.png");
+}
+
+.tile.dead.fireWater {
+  background-image: url("/void2-water-fire.png");
+}
+
 .tile.dead:hover {
   cursor: auto;
   border: 1px solid black;
