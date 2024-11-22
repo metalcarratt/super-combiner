@@ -147,7 +147,7 @@ export const chapter2: Chapter = {
     {
       id: 3,
       humanName: "Blooming Lakes",
-      hint: "",
+      hint: "Prioritise your tiles",
       size: 5,
       handSize: 1,
       cards: [1, 2, 3],
@@ -193,6 +193,63 @@ export const chapter2: Chapter = {
           type: RiverType.Straight,
           direction: Direction.Up,
           coords: { x: 3, y: 3 },
+        },
+      ],
+      goal: {
+        bloomScore: 150,
+      },
+    },
+    {
+      id: 4,
+      humanName: "Narrow valleys",
+      hint: "",
+      size: 5,
+      handSize: 1,
+      cards: [1, 2, 3],
+      deadZones: [
+        { x: 1, y: 2 },
+        { x: 3, y: 2 },
+        { x: 2, y: 3 },
+        { x: 2, y: 1 },
+        { x: 3, y: 1 },
+        { x: 1, y: 3 },
+      ],
+      blooms: [
+        { x: 1, y: 1 },
+        { x: 3, y: 3 },
+      ],
+      riverOverlays: [
+        {
+          type: RiverType.ClockwiseBend,
+          direction: Direction.Up,
+          coords: { x: 4, y: 1 },
+          source: true,
+        },
+        {
+          type: RiverType.AntiClockwiseBend,
+          direction: Direction.Left,
+          coords: { x: 4, y: 0 },
+        },
+        {
+          type: RiverType.AntiClockwiseBend,
+          direction: Direction.Down,
+          coords: { x: 3, y: 0 },
+        },
+        {
+          type: RiverType.ClockwiseBend,
+          direction: Direction.Down,
+          coords: { x: 0, y: 1 },
+          source: true,
+        },
+        {
+          type: RiverType.Straight,
+          direction: Direction.Down,
+          coords: { x: 0, y: 2 },
+        },
+        {
+          type: RiverType.AntiClockwiseBend,
+          direction: Direction.Right,
+          coords: { x: 0, y: 3 },
         },
       ],
       goal: {

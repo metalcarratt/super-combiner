@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CardsType, Coords, GoalType, SelectedCardType } from "../types";
 import { checkGoal, LevelFinished } from "./goals";
-import { calculateLevels } from "./calculate-levels";
+import { calculateLevels } from "./points/calculate-points";
 import { useLevel } from "./use-level";
 import { GameMap, TileType } from "./map";
 import { LevelType } from "./level-types";

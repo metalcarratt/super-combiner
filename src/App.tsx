@@ -7,7 +7,7 @@ import { LevelFinishedModal } from './ui/level-finished-modal';
 import { useApp } from './logic/use-app';
 import { HowToPlayModal } from './ui/howto-modal';
 import { AudioPanel } from './ui/audio';
-import { classForTile } from './logic/calculate-levels';
+import { classForTile } from './logic/points/calculate-points';
 import { LevelFailedModal } from './ui/level-failed-modal';
 
 function App() {

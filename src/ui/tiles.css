@@ -98,6 +98,21 @@
   background-size: cover;
 }
 
+.darkGrass {
+  background-image: url("/grass-dark.png");
+  background-size: cover;
+}
+
+.darkLightning {
+  background-image: url("/lightning-dark.png");
+  background-size: cover;
+}
+
+.darkFire {
+  background-image: url("/fire-dark.png");
+  background-size: cover;
+}
+
 .tile .river {
   width: 100%;
   height: 100%;

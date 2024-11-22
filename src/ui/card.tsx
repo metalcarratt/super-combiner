@@ -1,4 +1,4 @@
-import { classForTile } from "../logic/calculate-levels";
+import { classForTile } from "../logic/points/calculate-points";
 import { TileType } from "../logic/map";
 
 type Props = {

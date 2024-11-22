@@ -1,4 +1,4 @@
-import { classForTile } from "../logic/calculate-levels";
+import { classForTile } from "../logic/points/calculate-points";
 import { Coords } from "../types";
 import "./tiles.css";
 import { MapTileType, RiverEssenceType } from "../logic/map";

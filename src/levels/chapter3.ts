@@ -10,7 +10,7 @@ export const chapter3: Chapter = {
       hint: "The stars are yours!",
       size: 8,
       handSize: 3,
-      cards: [1, 2, 3],
+      cards: [2],
       blooms: [
         { x: 5, y: 7 },
         { x: 6, y: 3 },
@@ -20,6 +20,34 @@ export const chapter3: Chapter = {
       deadZones: 6,
       goal: {
         bloomScore: 100,
+      },
+    },
+    {
+      id: 1,
+      humanName: "Dark Matter",
+      hint: "Opposites do not attract",
+      size: 4,
+      handSize: 1,
+      cards: [1, 4],
+      goal: {
+        score: 35,
+      },
+    },
+    {
+      id: 2,
+      humanName: "Dark Matter #2",
+      hint: "Opposites can get along",
+      size: 4,
+      handSize: 2,
+      cards: [2, 5],
+      deadZones: [
+        { x: 0, y: 0 },
+        { x: 3, y: 0 },
+        { x: 0, y: 3 },
+        { x: 3, y: 3 },
+      ],
+      goal: {
+        score: 25,
       },
     },
   ],

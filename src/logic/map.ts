@@ -7,6 +7,9 @@ export enum TileType {
   Grass = 1,
   Lightning = 2,
   Fire = 3,
+  DarkGrass = 4,
+  DarkLightning = 5,
+  DarkFire = 6,
   Bloom = 9,
 }
 
@@ -29,6 +32,7 @@ export type MapTileType = {
 
 type TileFinderFn = (tile: MapTileType) => boolean;
 type ForEachFn = (coords: Coords, tile: MapTileType) => any;
+type MapEachFn = (coords: Coords, tile: MapTileType) => MapTileType;
 
 const t = () => ({ tile: 0, level: 0 });
 
@@ -58,6 +62,9 @@ export class GameMap {
   forEach = (fn: ForEachFn) => {
     this.map.forEach((row, y) => row.forEach((tile, x) => fn({ x, y }, tile)));
   };
+
+  mapEach = (fn: MapEachFn) =>
+    this.getMap().map((row, y) => row.map((tile, x) => fn({ x, y }, tile)));
 
   getMap = () => this.map;
 
@@ -152,13 +159,33 @@ export class GameMap {
       this.right(coords),
     ].filter((coord) => coord && this.inMap(coord));
 
+  upLeft = (coords: Coords) => {
+    const _coords = { y: coords.y - 1, x: coords.x - 1 };
+    return this.inMap(_coords) ? _coords : undefined;
+  };
+
+  upRight = (coords: Coords) => {
+    const _coords = { y: coords.y - 1, x: coords.x + 1 };
+    return this.inMap(_coords) ? _coords : undefined;
+  };
+
+  downLeft = (coords: Coords) => {
+    const _coords = { y: coords.y + 1, x: coords.x - 1 };
+    return this.inMap(_coords) ? _coords : undefined;
+  };
+
+  downRight = (coords: Coords) => {
+    const _coords = { y: coords.y + 1, x: coords.x + 1 };
+    return this.inMap(_coords) ? _coords : undefined;
+  };
+
   diagonalCoords = (coords: Coords) =>
     [
-      { y: coords.y - 1, x: coords.x - 1 },
-      { y: coords.y + 1, x: coords.x + 1 },
-      { y: coords.y + 1, x: coords.x - 1 },
-      { y: coords.y - 1, x: coords.x + 1 },
-    ].filter((coord) => this.inMap(coord));
+      this.upLeft(coords),
+      this.upRight(coords),
+      this.downLeft(coords),
+      this.downRight(coords),
+    ].filter((coord) => coord && this.inMap(coord));
 
   surroundingCoords = (coords: Coords) => [
     ...this.adjacentCoords(coords),
